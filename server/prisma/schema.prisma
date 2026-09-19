@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  username  String     @unique
+  password  String
+  createdAt DateTime   @default(now())
+  questions Question[]
+}
+
+model Question {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // ── 元数据 ──
+  module       String   // 行测 / 申论 / 公基 / 面试
+  submodule    String   // 判断推理 / 言语理解 / ...
+  questionType String   // 削弱型 / 加强型 / ...
+  difficulty   Int      // 1-5
+  tags         String   // JSON array: ["另有他因", "因果论证"]
+  frequency    String   // 高频 / 中频 / 低频
+  year         String?
+
+  // ── 题目内容 ──
+  stem          String
+  options       String  // JSON array: [{label, content}]
+  correctAnswer String
+
+  // ── 结构化解析 ──
+  breakthrough    String? // 破题眼
+  correctAnalysis String? // 正确项分析
+  trapAnalysis    String? // 干扰项排雷 JSON array
+  methodSummary   String? // 方法总结
+  examTips        String? // 备考提醒
+
+  // ── AI 元数据 ──
+  analysisSource String? // ai / manual / template
+  aiModel        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([module, submodule])
+}
