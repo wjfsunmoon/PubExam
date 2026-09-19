@@ -1,0 +1,26 @@
+name = "pubexam"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# ── 静态资源（构建后的 React 前端）──
+[assets]
+directory = "../client/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"  # SPA fallback：非文件路径返回 index.html
+
+# ── D1 数据库 ──
+# database_id 在运行 `npx wrangler d1 create pubexam` 后替换
+[[d1_databases]]
+binding = "DB"
+database_name = "pubexam"
+database_id = "REPLACE_WITH_YOUR_DATABASE_ID"
+
+# ── 环境变量（非敏感）──
+[vars]
+OPENAI_BASE_URL = "https://api.openai.com/v1"
+OPENAI_MODEL = "gpt-4o"
+JWT_EXPIRES_IN = "7d"
+
+# ── 敏感变量（用 wrangler secret 设置）──
+# npx wrangler secret put JWT_SECRET
+# npx wrangler secret put OPENAI_API_KEY

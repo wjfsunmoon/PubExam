@@ -1,0 +1,21 @@
+{
+  "name": "pubexam-worker",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create pubexam",
+    "db:init": "wrangler d1 execute pubexam --file=schema.sql",
+    "db:query": "wrangler d1 execute pubexam --command",
+    "secret:jwt": "wrangler secret put JWT_SECRET",
+    "secret:openai": "wrangler secret put OPENAI_API_KEY"
+  },
+  "dependencies": {
+    "hono": "^4.6.0",
+    "jose": "^5.9.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.84.0"
+  }
+}
