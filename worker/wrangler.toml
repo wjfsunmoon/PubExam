@@ -3,6 +3,11 @@ main = "src/index.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
+# ── 自定义域名 ──
+routes = [
+  { pattern = "wjfsunmoon.ccwu.cc", custom_domain = true }
+]
+
 # ── 静态资源（构建后的 React 前端）──
 [assets]
 directory = "../client/dist"

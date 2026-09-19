@@ -99,15 +99,15 @@ export async function verifyJWT(token, secret) {
   }
 }
 
-/** Hono JWT 鉴权中间件 */
-export function authMiddleware(secret) {
+/** Hono JWT 鉴权中间件（从 c.env.JWT_SECRET 读取密钥）*/
+export function authMiddleware() {
   return async (c, next) => {
     const authHeader = c.req.header('Authorization');
     if (!authHeader?.startsWith('Bearer ')) {
       return c.json({ error: '未登录，请先登录' }, 401);
     }
     const token = authHeader.slice(7);
-    const payload = await verifyJWT(token, secret);
+    const payload = await verifyJWT(token, c.env.JWT_SECRET);
     if (!payload) {
       return c.json({ error: '登录已过期，请重新登录' }, 401);
     }
