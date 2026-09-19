@@ -13,7 +13,7 @@ not_found_handling = "single-page-application"  # SPA fallback：非文件路径
 [[d1_databases]]
 binding = "DB"
 database_name = "pubexam"
-database_id = "REPLACE_WITH_YOUR_DATABASE_ID"
+database_id = "cccd0236-b258-4a22-97be-5a4d5d017848"
 
 # ── 环境变量（非敏感）──
 [vars]
